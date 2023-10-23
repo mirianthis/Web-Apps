@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Canvas example</title>
+	<script type="text/javascript">
+		class Sprite{
+			constructor(topLeftX,topLeftY,height,width,color){
+				this.topLeftX = topLeftX;
+				this.topLeftY = topLeftY;
+				this.height = height;
+				this.width = width;
+				this.color = color;
+				this.direction = null;
+			}
+
+			move(){
+				switch(this.direction){
+					case 'up':
+						this.topLeftY--;
+						break;
+					case 'down':
+						this.topLeftY++;
+						break;
+					case 'left':
+						this.topLeftX--;
+						break;
+					case 'right':
+						this.topLeftX++;
+						break;
+				}
+			}
+
+			draw(context){
+				this.move();
+				context.fillStyle = this.color;
+				context.fillRect(this.topLeftX,this.topLeftY,this.width,this.height);
+			}
+		}
+
+		window.addEventListener('load',function(event){
+			const canvas = document.getElementById('contentArea');
+			const context = canvas.getContext('2d');
+			const sprite = new Sprite(10,10,10,10,'green');
+
+			setInterval(function(){
+				context.clearRect(0,0,canvas.height,canvas.width);
+				sprite.draw(context);
+			},20);
+
+			window.addEventListener('keyup',function(event){
+				switch(event.key){
+					case 'ArrowUp':
+						sprite.direction = 'up';
+						break;
+					case 'ArrowDown':
+						sprite.direction = 'down';
+						break;
+					case 'ArrowLeft':
+						sprite.direction = 'left';
+						break;
+					case 'ArrowRight':
+						sprite.direction = 'right';
+						break;
+				}
+			});
+		});
+	</script>
+</head>
+<body>
+	<canvas id="contentArea" tabindex="1" height="300" width="300"></canvas>
+</body>
+</html>

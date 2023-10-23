@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Canvas example</title>
+	<script type="text/javascript">
+		/*
+		const sprite = {
+			topLeftX:10,
+			topLeftY:10,
+			height:10,
+			width:10,
+			color:'green',
+			direction:null,
+			move:function(){
+				switch(this.direction){
+					case 'up':
+						this.topLeftY--;
+						break;
+					case 'down':
+						this.topLeftY++;
+						break;
+					case 'left':
+						this.topLeftX--;
+						break;
+					case 'right':
+						this.topLeftX++;
+						break;
+				}
+			},
+			draw:function(context){
+				this.move();
+				context.fillStyle = this.color;
+				context.fillRect(this.topLeftX,this.topLeftY,this.width,this.height);
+			}
+		};
+*/
+
+class Sprite{
+		constructor(topLeftX,topLeftY,height,width,color,direction){
+	        this.topLeftX = topLeftX;
+			this.topLeftY = topLeftY;
+			this.height = height;
+			this.width = width;
+			this.color = color;
+			this.direction = null;
+		}
+
+			move(){
+				switch(this.direction){
+					case 'up':
+						this.topLeftY--;
+						break;
+					case 'down':
+						this.topLeftY++;
+						break;
+					case 'left':
+						this.topLeftX--;
+						break;
+					case 'right':
+						this.topLeftX++;
+						break;
+				}
+			};
+
+			draw(context){
+				this.move();
+				context.fillStyle = this.color;
+				context.fillRect(this.topLeftX,this.topLeftY,this.width,this.height);
+			};
+}
+
+
+		window.addEventListener('load',function(event){
+			const canvas = document.getElementById('contentArea');
+			const context = canvas.getContext('2d');
+			const sprite = new Sprite(10,10,10,10,'green');
+			const sprite2 = new Sprite(40,40,10,10,'red');
+
+			//FOR DEEP COPY
+			//const sprite3 = JSON.parse(JSON.stringify(sprite2));
+
+			setInterval(function(){
+				context.clearRect(0,0,canvas.height,canvas.width);
+				sprite.draw(context);
+				sprite2.draw(context);
+			},20);			
+
+			window.addEventListener('keyup', function(event){
+				switch(event.key){
+					case 'ArrowUp':
+						sprite.direction = 'up';
+						sprite.draw(context);
+						break;
+					case 'ArrowDown':
+						sprite.direction = 'down';
+						sprite.draw(context);
+						break;
+					case 'ArrowLeft':
+						sprite.direction = 'left';
+						sprite.draw(context);
+						break;
+					case 'ArrowRight':
+						sprite.direction = 'right';
+						sprite.draw(context);
+						break;
+				}
+				
+			});
+		});
+		
+</script>
+</head>
+<body>
+		<canvas id="contentArea" tabindex="1" height="300" width="300"></canvas>
+</body>
+
+</html>

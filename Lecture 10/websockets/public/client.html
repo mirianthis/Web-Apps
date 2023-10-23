@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>A websockets client</title>
+</head>
+<body>
+	<input type="text" id="userinput"><br>
+	<input type="button" id="sendButton" value="Send">
+	<div id="serverResponse"></div>
+
+	<script type="text/javascript">
+		window.addEventListener('load',(event)=>{			
+				const websocket = new WebSocket('ws://localhost:3000/echo');
+				websocket.addEventListener('open',(event)=>{					
+						alert('Connection with server established');
+					
+				});
+				websocket.addEventListener('message',(event)=>{
+					const data  = event.data;
+					document.getElementById('serverResponse').innerHTML = data;
+				});
+				websocket.addEventListener('error',(event)=>{
+					alert('Error');
+				});
+				websocket.addEventListener('close',(event)=>{
+					alert('Closing Connection');
+				});
+				document.getElementById('sendButton').addEventListener('click',(event)=>{
+				const userText = document.getElementById('userInput').value;	
+				websocket.send(userText);
+				});
+			});
+	</script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<input type="text" id="name">
+	<input type="text" id="password">
+	<input type="text" id="profession">
+	<input type="button" id="sendRequest" value="send">
+	<input type="button" id="getUsers" value='getUsers'>
+	<br>
+	<input type="text" id="id">
+	<input type="button" id="getUserById" value='get User By Id'>
+	<div id="usersArea"></div>
+</body>
+<script type="text/javascript">
+	window.addEventListener('load',(event)=>{
+		document.getElementById('getUsers').addEventListener('click',(event)=>{
+			const xhr = new XMLHttpRequest();
+			xhr.open('GET','http://localhost:3000/listUsers',true);
+			xhr.send();
+			xhr.onreadystatechange = function(){
+				if(xhr.readyState == 4){
+					if(xhr.status == 200){
+						let divElem = document.getElementById('usersArea');
+						const results = JSON.parse(xhr.responseText);
+					
+						result.forEach((item)=>{
+							divElem.innerHTML += `${item.name} ${item.password}
+							 ${item.profession}`;
+						});
+					}
+				}
+			};
+		});
+
+		document.getElementById('sendRequest').addEventListener('click',(event)=>{
+			const user = {
+				'name':document.getElementById('name').value,
+				'password':document.getElementById('password').value,
+				'profession':document.getElementById('profession').value
+			};
+
+			const xhr = new XMLHttpRequest();
+			xhr.open('POST','http://localhost:3000/addUser',true);
+			xhr.setRequestHeader('Content-Type','application/json');
+			xhr.send(JSON.stringify(user));
+			xhr.onreadystatechange = function(){
+				if(xhr.readyState == 4){
+					if(xhr.status == 200){
+						alert(xhr.responseText);
+					}
+				}
+			};
+		});
+
+		document.getElementById('getUserById').addEventListener('click',(event)=>{
+			const id = document.getElementById('id').value;
+			const xhr = new XMLHttpRequest();
+			xhr.open('GET','http://localhost:3000/user/${id}',true);
+			xhr.send();
+			xhr.onreadystatechange = function(){
+				if(xhr.readyState == 4){
+					if(xhr.status == 200){
+						let divElem = document.getElementById('usersArea');
+						const results = JSON.parse(xhr.responseText);
+						const item = result[0];
+
+						divElem.innerHTML += `${item.name} ${item.password}
+							 ${item.profession}`;
+			};
+		};
+	});
+</script>
+</html>

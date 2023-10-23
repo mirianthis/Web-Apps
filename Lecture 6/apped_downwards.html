@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>First JS example</title>
+</head>
+<body>	
+	<input type="text" id="tb1"><br>
+	<input type="text" id="tb2"><br>
+	<input type="text" id="tb3"><br>
+	<input type="button" id="button" value="Click Here!!">
+	<div id = "content"></div>
+	
+	<script type="text/javascript">
+		document.getElementById('button').addEventListener('click',function(event){
+			const tb1Value = document.getElementById('tb1').value;
+			const tb2Value = document.getElementById('tb2').value;
+			const tb3Value = document.getElementById('tb3').value;				
+		
+			const h1Elem = document.createElement('h1');
+			const h2Elem = document.createElement('h2');
+			const pElem = document.createElement('p');
+
+			const h1Text = document.createTextNode(tb1Value);
+			const h2Text = document.createTextNode(tb2Value);
+			const pText = document.createTextNode(tb3Value);
+
+			h1Elem.appendChild(h1Text);
+			h2Elem.appendChild(h2Text);
+			pElem.appendChild(pText);
+
+			const divElem = document.getElementById('content');
+			divElem.appendChild(h1Elem);
+			divElem.appendChild(h2Elem);
+			divElem.appendChild(pElem);
+		});
+	</script>
+	
+</body>
+</html>
